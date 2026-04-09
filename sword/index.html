@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sword - Premium T-Shirts</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="#" class="brand" id="nav-brand">
+                <img src="sword wear.webp" alt="SWORDWEAR Logo">
+                <span class="brand-name">SWORDWEAR</span>
+            </a>
+
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search for premium t-shirts, sizes, colors...">
+                <button id="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+
+            <div style="display: flex; align-items: center;">
+                <nav class="nav-links">
+                    <a href="#" id="nav-home" class="active">Shop</a>
+                    <a href="#" id="nav-wishlist">Wishlist <span class="badge hidden" id="wishlist-badge">0</span></a>
+                    <a href="#" id="nav-cart"><i class="fa-solid fa-cart-shopping"></i> Cart <span class="badge hidden"
+                            id="cart-badge">0</span></a>
+                    <a href="#" id="nav-orders" class="hidden">Orders</a>
+                </nav>
+
+                <div class="auth-buttons" id="auth-buttons">
+                    <button class="btn btn-outline" id="btn-show-login">Log In</button>
+                    <button class="btn btn-primary" id="btn-show-register">Sign Up</button>
+                </div>
+
+                <div class="user-menu hidden" id="user-menu">
+                    <a href="#" id="nav-profile"
+                        style="color: var(--text-primary); text-decoration: none; margin-right: 1rem;">
+                        <i class="fa-solid fa-user-circle" style="font-size: 1.2rem; vertical-align: middle;"></i>
+                        <span id="user-greeting" style="font-weight: bold; vertical-align: middle;"></span>
+                    </a>
+                    <button class="btn btn-outline" id="btn-logout"
+                        style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Log Out</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="section-home">
+            <div class="category-filters" id="category-filters">
+                <button class="filter-btn active" data-category="all">All Items</button>
+                <button class="filter-btn" data-category="basics">Everyday Basics</button>
+                <button class="filter-btn" data-category="premium">Premium Collection</button>
+                <button class="filter-btn" data-category="v-neck">V-Necks</button>
+                <button class="filter-btn" data-category="polo">Polos & Henleys</button>
+            </div>
+
+            <h2 class="section-title">
+                <span id="shop-title">Featured Products</span>
+                <span id="search-result-count"
+                    style="font-size: 1rem; color: var(--text-secondary); font-weight: normal;"></span>
+            </h2>
+            <div class="products-grid" id="products-container">
+                <!-- Products injected via JS -->
+            </div>
+        </section>
+
+        <!-- Product Detail Section -->
+        <section id="section-product-detail" class="hidden">
+            <button class="btn btn-outline" onclick="navigateTo('home')" style="margin-bottom: 2rem;"><i
+                    class="fa-solid fa-arrow-left"></i> Back to Shop</button>
+            <div class="product-detail" id="product-detail-container">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+
+        <!-- Login Section -->
+        <section id="section-login" class="hidden">
+            <div class="auth-container">
+                <h2>Welcome Back</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" required placeholder="Enter email address">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required placeholder="Enter password">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Log In</button>
+                    <div class="auth-switch">
+                        New to SWORD? <a href="#" id="link-register">Create an account</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Register Section -->
+        <section id="section-register" class="hidden">
+            <div class="auth-container">
+                <h2>Create Account</h2>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-name">Full Name</label>
+                        <input type="text" id="register-name" required placeholder="Enter full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email Address</label>
+                        <input type="email" id="register-email" required placeholder="Enter email address">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required placeholder="Enter password">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+                    <div class="auth-switch">
+                        Already have an account? <a href="#" id="link-login">Log in</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+
+        <!-- Cart Section (List) -->
+        <section id="section-cart" class="hidden">
+            <h2 class="section-title">Shopping Cart</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+                <div id="cart-container">
+                    <!-- Cart Items -->
+                </div>
+
+                <div id="cart-summary" class="hidden"
+                    style="background: var(--surface-color); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color); height: max-content; position: sticky; top: 100px;">
+                    <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Cart Summary</h3>
+                    <div
+                        style="display: flex; justify-content: space-between; margin-bottom: 1rem; color: var(--text-secondary);">
+                        <span>Items (<span id="cart-item-count">0</span>):</span>
+                        <span id="cart-subtotal" style="color: var(--text-primary); font-weight: bold;">₹0</span>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; margin-bottom: 1.5rem; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem;">
+                        <span>Shipping:</span>
+                        <span style="color: #10b981; font-weight: bold;">FREE</span>
+                    </div>
+                    <h3 style="margin-bottom: 2rem; display: flex; justify-content: space-between; font-size: 1.8rem;">
+                        <span>Order Total:</span>
+                        <span id="cart-total-price" style="color: var(--primary-color)">₹0</span>
+                    </h3>
+                    <button class="btn btn-amazon" id="btn-proceed-checkout"
+                        style="width: 100%; font-size: 1.2rem; padding: 1rem; border-radius: 8px;">Proceed to
+                        Checkout</button>
+
+                    <div
+                        style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center;">
+                        <i class="fa-solid fa-lock"></i> Secure checkout powered by SWORD
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Checkout Form Section -->
+        <section id="section-checkout" class="hidden">
+            <button class="btn btn-outline" onclick="navigateTo('cart')" style="margin-bottom: 2rem;"><i
+                    class="fa-solid fa-arrow-left"></i> Return to Cart</button>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+                <div class="checkout-form-container">
+                    <h2 style="margin-bottom: 1rem;"><i class="fa-solid fa-truck"></i> Shipping Address</h2>
+                    <form id="checkout-form">
+                        <div class="form-group">
+                            <label for="checkout-name">Full Name</label>
+                            <input type="text" id="checkout-name" required placeholder="Enter full name">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="checkout-email">Email Address</label>
+                                <input type="email" id="checkout-email" required placeholder="Enter email address">
+                            </div>
+                            <div class="form-group">
+                                <label for="checkout-phone">Phone Number</label>
+                                <input type="tel" id="checkout-phone" required placeholder="Enter mobile number">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="checkout-street">Street Address</label>
+                            <textarea id="checkout-street" rows="2" required
+                                placeholder="Enter street address"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="checkout-city">City</label>
+                                <input type="text" id="checkout-city" required placeholder="Enter city name">
+                            </div>
+                            <div class="form-group">
+                                <label for="checkout-state">State / Province</label>
+                                <select id="checkout-state" required>
+                                    <option value="" disabled selected>Select State</option>
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                    <option value="Assam">Assam</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="Chhattisgarh">Chhattisgarh</option>
+                                    <option value="Goa">Goa</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                    <option value="Jharkhand">Jharkhand</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Kerala">Kerala</option>
+                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Manipur">Manipur</option>
+                                    <option value="Meghalaya">Meghalaya</option>
+                                    <option value="Mizoram">Mizoram</option>
+                                    <option value="Nagaland">Nagaland</option>
+                                    <option value="Odisha">Odisha</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Sikkim">Sikkim</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Telangana">Telangana</option>
+                                    <option value="Tripura">Tripura</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="Uttarakhand">Uttarakhand</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                    <option value="Chandigarh">Chandigarh</option>
+                                    <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and
+                                        Daman and Diu</option>
+                                    <option value="Delhi">Delhi</option>
+                                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                    <option value="Ladakh">Ladakh</option>
+                                    <option value="Lakshadweep">Lakshadweep</option>
+                                    <option value="Puducherry">Puducherry</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="checkout-pin">PIN / Zip Code</label>
+                                <input type="text" id="checkout-pin" required placeholder="Enter pin code">
+                            </div>
+                        </div>
+
+                        <h2 style="margin: 2rem 0 1rem;"><i class="fa-solid fa-wallet"></i> Payment Method</h2>
+                        <div class="payment-methods">
+                            <div class="payment-option">
+                                <input type="radio" name="payment_method" id="pay-upi" value="upi" checked>
+                                <label for="pay-upi">
+                                    <span style="font-weight: 600; font-size: 1.1rem;">UPI (GPay, PhonePe, Paytm)</span>
+                                    <span style="color: var(--text-secondary); font-size: 0.9rem;">Pay securely using
+                                        UPI apps</span>
+                                </label>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg"
+                                    style="height: 20px; margin-left: auto;" alt="UPI">
+                            </div>
+                            <div class="payment-option">
+                                <input type="radio" name="payment_method" id="pay-cod" value="cod">
+                                <label for="pay-cod">
+                                    <span style="font-weight: 600; font-size: 1.1rem;">Cash on Delivery (COD)</span>
+                                    <span style="color: var(--text-secondary); font-size: 0.9rem;">Pay with cash when
+                                        your order arrives</span>
+                                </label>
+                                <i class="fa-solid fa-money-bill-wave" style="margin-left: auto;"></i>
+                            </div>
+                        </div>
+
+                        <div id="upi-payment-details"
+                            style="background: var(--surface-hover); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                            <div class="form-group">
+                                <label>UPI ID</label>
+                                <input type="text" id="checkout-upi-id" placeholder="Enter U PI ID">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-amazon"
+                            style="width: 100%; font-size: 1.3rem; padding: 1.2rem; border-radius: 8px; font-weight: 800;">Place
+                            Order</button>
+                    </form>
+                </div>
+
+                <div
+                    style="background: var(--surface-color); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color); height: max-content; position: sticky; top: 100px;">
+                    <h3 style="margin-bottom: 1.5rem;">Order Details</h3>
+                    <div id="checkout-items-preview"
+                        style="margin-bottom: 1.5rem; max-height: 300px; overflow-y: auto;">
+                        <!-- Render small list of checkout items -->
+                    </div>
+                    <hr style="border:0; height:1px; background:var(--border-color); margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <span>Subtotal:</span>
+                        <span id="checkout-subtotal" style="font-weight: bold;">₹0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                        <span>Shipping:</span>
+                        <span style="color: #10b981; font-weight: bold;">FREE</span>
+                    </div>
+                    <h3
+                        style="display: flex; justify-content: space-between; font-size: 1.8rem; color: var(--primary-color);">
+                        <span>Total:</span>
+                        <span id="checkout-final-total">₹0</span>
+                    </h3>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Wishlist Section -->
+        <section id="section-wishlist" class="hidden">
+            <h2 class="section-title">Your Wishlist</h2>
+            <div id="wishlist-container" class="products-grid">
+                <!-- Wishlist Items -->
+            </div>
+        </section>
+
+        <!-- Orders Section -->
+        <section id="section-orders" class="hidden">
+            <h2 class="section-title">Your Orders</h2>
+            <div id="orders-container">
+                <!-- Orders -->
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="section-profile" class="hidden">
+            <h2 class="section-title">My Profile</h2>
+            <div
+                style="max-width: 600px; margin: 0 auto; background: var(--surface-color); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color);">
+                <form id="profile-form">
+                    <div class="form-group">
+                        <label for="profile-name">Full Name</label>
+                        <input type="text" id="profile-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-email">Email Address</label>
+                        <input type="email" id="profile-email" required readonly
+                            style="background: var(--surface-hover); cursor: not-allowed; opacity: 0.7;"
+                            title="Email cannot be changed">
+                        <div style="font-size: 0.8rem; margin-top: 0.4rem; color: var(--text-secondary);">Email address
+                            cannot be changed.</div>
+                    </div>
+                    <div class="form-group" style="margin-top: 1.5rem;">
+                        <label for="profile-password">New Password</label>
+                        <input type="password" id="profile-password" placeholder="Leave blank to keep current password">
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button type="submit" class="btn btn-amazon"
+                            style="flex: 2; padding: 1rem; font-size: 1.1rem; border-radius: 8px;"><i
+                                class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+                        <button type="button" class="btn btn-outline" id="btn-profile-logout"
+                            style="flex: 1; padding: 1rem; border-radius: 8px;">Log Out</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SWORD Wear. All rights reserved.</p>
+        <div
+            style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem; font-size: 1.2rem; color: var(--text-secondary);">
+            <i class="fa-brands fa-cc-visa"></i>
+            <i class="fa-brands fa-cc-mastercard"></i>
+            <i class="fa-brands fa-cc-paypal"></i>
+            <i class="fa-brands fa-cc-amex"></i>
+        </div>
+    </footer>
+
+    <div id="cancel-modal" class="hidden"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+        <div
+            style="background: var(--surface-color); padding: 2.5rem; border-radius: 16px; border: 1px solid var(--border-color); width: 90%; max-width: 400px;">
+            <h2 style="margin-bottom: 1rem;"><i class="fa-solid fa-triangle-exclamation"
+                    style="color: var(--amazon-yellow)"></i> Cancel Order</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Please tell us why you are cancelling this
+                order:</p>
+            <select id="cancel-reason"
+                style="width: 100%; padding: 0.8rem 1rem; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); margin-bottom: 1.5rem; font-family: inherit;">
+                <option value="" disabled selected>Select an issue</option>
+                <option value="Ordered by mistake">Ordered by mistake</option>
+                <option value="Found a better price elsewhere">Found a better price elsewhere</option>
+                <option value="Delivery is taking too long">Delivery is taking too long</option>
+                <option value="Changed my mind">Changed my mind</option>
+                <option value="Other">Other</option>
+            </select>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-outline" style="flex: 1;" onclick="closeCancelModal()">Go Back</button>
+                <button class="btn btn-primary" style="flex: 1; background: var(--accent-color);"
+                    onclick="confirmCancelOrder()">Confirm Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+    <script src="script.js"></script>
+</body>
+
+</html>
